@@ -1,118 +1,36 @@
 :root {
   font-family: 'Montserrat', sans-serif;
+  --color-texto: #272626;
+  --color-borde: #dcdcdc;
+  --color-fondo: #ffffff;
 }
 
-.header {
-  background-color: #ffffff;
+header {
+  background-color: var(--color-fondo);
   padding: 1.5rem 2rem;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .logo {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 1.2rem;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.logoImg {
-  width: 60px;
+.img_logo {
+  width: 50px;
   height: auto;
   object-fit: contain;
 }
 
 .titulo {
-  color: #272626;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
+  color: var(--color-texto);
   margin: 0;
-  text-align: center;
-}
-
-.subtitulo {
-  margin-top: 1rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #e0e0e0;
-  width: 100%;
-  text-align: center;
-}
-
-.subtitulo h3 {
-  font-size: 1rem;
-  color: #555;
-  text-transform: uppercase;
   letter-spacing: 1px;
-  margin: 0.5rem 0 0;
-}
-
-
-.contenedor {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  background-color: #f9f9f9;
-  padding: 2rem;
-}
-
-.formulario {
-  background-color: #ffffff;
-  padding: 2rem 2.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 400px;
-}
-
-.form p {
-  margin-bottom: 1.2rem;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  background-color: #fefefe;
-  transition: border-color 0.2s ease;
-}
-
-input:focus {
-  outline: none;
-  border-color: #999;
-}
-
-.botonWrapper {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.boton {
-  background-color: #272626;
-  color: #fff;
-  padding: 0.7rem 2rem;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.boton:hover {
-  background-color: #444;
-}
-
-.error {
-  margin-top: 1rem;
-  color: #c0392b;
-  font-size: 0.95rem;
-  text-align: center;
 }
