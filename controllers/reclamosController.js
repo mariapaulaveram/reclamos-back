@@ -1,3 +1,4 @@
+//integra con el front para subir los reclamos a la bs
 const pool = require('../models/bd');
 const { subirImagen } = require('../services/cloudinaryService');
 

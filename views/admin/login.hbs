@@ -1,0 +1,19 @@
+<div class="contenedor">
+  <form action="/admin/login" method="post" class="formulario">
+    <div class="form">
+      <p>
+        <input type="text" id="inputUser" placeholder="Usuario" name="usuario">
+      </p>
+      <p>
+        <input type="password" id="inputPassword" placeholder="Contraseña" name="password">
+      </p>
+    </div>
+    <div class="botonWrapper">
+      <button type="submit" class="boton">Ingresar</button>
+    </div>
+    {{#if error}}
+      <p class="error">Usuario y/o Contraseña incorrectos</p>
+    {{/if}}
+  </form>
+</div>
+

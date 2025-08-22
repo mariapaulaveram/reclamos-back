@@ -1,3 +1,4 @@
+//es la integracion con el front para subir los reclamos a la bd
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
