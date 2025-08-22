@@ -5,11 +5,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+
+const secured = require('./middlewares/secured');
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var reclamosRouter = require('./routes/reclamos'); // 👈 Nuevo router
+//var verReclamosRouter = require('./routes/verReclamos');
 
 var app = express();
+
+app.use(express.urlencoded({ extended: true }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/reclamos', reclamosRouter); // 👈 Ruta para el formulario
+//app.use('/verReclamos',secured, verReclamosRouter);
 
 // 404 handler
 app.use(function(req, res, next) {
