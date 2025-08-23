@@ -5,6 +5,8 @@
   --color-fondo: #ffffff;
 }
 
+/*Header*/
+
 header {
   background-color: var(--color-fondo);
   padding: 1.5rem 2rem;
@@ -33,4 +35,94 @@ header {
   color: var(--color-texto);
   margin: 0;
   letter-spacing: 1px;
+}
+
+/*login*/
+.contenedor-login {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px 25px;
+  background-color: #fdfdfd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.formulario-login p {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #495057;
+  outline: none;
+}
+
+.botonWrapper {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.boton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 15px;
+}
+
+
+/*Inicio*/
+.saludo-usuario {
+  background-color: #f8f9fa; /* fondo claro institucional */
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.texto-saludo {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #343a40; /* gris institucional */
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.texto-saludo a.btn-danger {
+  font-size: 0.95rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.texto-saludo a.btn-danger:hover {
+  background-color: #c82333; /* tono más oscuro al pasar el mouse */
+  text-decoration: none;
 }
