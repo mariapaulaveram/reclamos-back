@@ -4,3 +4,40 @@
                     class="fas fa-sign-out-alt"></i> </a></p>
     </div>
 </div>
+
+<div class="row">
+        <div class="col-7">
+            <h3>Listado de Reclamos</h3>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#id reclamo</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">email</th>
+                        <th scope="col">tipo de reclamo</th>
+                        <th scope="col">descripcion</th>
+                        <th scope="col">Imagen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each reclamos}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{nombre}}</td>
+                        <td>{{email}}</td>
+                        <td>{{tipo}}</td>
+                        <td>{{descripcion}}</td>
+                        <td>{{{imagen_url}}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
