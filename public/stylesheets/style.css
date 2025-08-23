@@ -97,32 +97,49 @@ input:focus {
 
 /*Inicio*/
 .saludo-usuario {
-  background-color: #f8f9fa; /* fondo claro institucional */
-  padding: 15px 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
 .texto-saludo {
   font-size: 1.1rem;
   font-weight: 500;
-  color: #343a40; /* gris institucional */
-  margin: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
+  color: #333;
 }
 
-.texto-saludo a.btn-danger {
-  font-size: 0.95rem;
+.btn-danger {
+  font-size: 0.9rem;
   padding: 6px 12px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
+  border-radius: 4px;
 }
 
-.texto-saludo a.btn-danger:hover {
-  background-color: #c82333; /* tono más oscuro al pasar el mouse */
-  text-decoration: none;
+h3 {
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.table {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  padding: 12px;
+}
+
+.img-reclamo {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }

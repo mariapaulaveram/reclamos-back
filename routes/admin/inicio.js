@@ -6,8 +6,8 @@ const reclamosModel = require('../../models/reclamosModel'); //
 const util = require('util');
 const cloudinary = require('cloudinary').v2;
 
-const uploader = util.promisify(cloudinary.uploader.upload);
-const destroy = util.promisify(cloudinary.uploader.destroy);
+//const uploader = util.promisify(cloudinary.uploader.upload);
+//const destroy = util.promisify(cloudinary.uploader.destroy);
 
 // Middleware para validar sesión
 function secured(req, res, next) {
@@ -24,22 +24,17 @@ router.get('/', secured, async function(req, res, next) {
     let reclamos = await reclamosModel.getReclamos();
 
     reclamos = reclamos.map(reclamo => {
-      if (reclamo.img_id) {
-        const imagen = cloudinary.image(reclamo.img_id, {
-          width: 70,
-          height: 70,
-          crop: 'fill'
-        });
-        return {
-          ...reclamo,
-          imagen
-        };
-      } else {
-        return {
-          ...reclamo,
-          imagen: ''
-        };
-      }
+      return {
+        ...reclamo,
+        fecha_formateada: new Date(reclamo.fecha).toLocaleString('es-AR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
+        imagen: reclamo.imagen_url || '' // ya es la URL completa
+      };
     });
 
     res.render('admin/inicio', {
@@ -60,4 +55,3 @@ router.get('/', secured, async function(req, res, next) {
 });
 
 module.exports = router;
-
