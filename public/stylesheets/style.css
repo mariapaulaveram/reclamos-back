@@ -143,3 +143,62 @@ h3 {
   border-radius: 4px;
   box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }
+
+/*footer*/
+.footer {
+  background-color: #333333;
+  padding: 60px 20px 30px;
+  font-family: 'Times New Roman', Times, serif;
+  color: #fbf9f9;
+}
+
+.footerContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contactInfo,
+.social {
+  flex: 1;
+  min-width: 250px;
+}
+
+h5 {
+  margin-bottom: 20px;
+  border-bottom: solid 1px #fbf9f9;
+  padding-bottom: 1rem;
+}
+
+.socialIcons {
+  list-style: none;
+  padding: 0;
+}
+
+.socialIcons a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.socialIcons a:hover {
+  color: #ef0c1f;
+}
+
+.socialIcons i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+.socialIcons a, .socialIcons i, .contactInfo p, .contactInfo i{
+    color: rgba(255, 255, 255, 0.8); /* blanco suave */
+}
+
+.footerBottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.85rem;
+}
