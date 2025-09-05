@@ -13,6 +13,26 @@ function getVecino(email, password) {
   });
 }
 
+function getVecinoPorId(id) {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT id, email, nombre, apellido FROM vecinos WHERE id = ?';
+    console.log("🔍 Buscando vecino con id:", id);
+
+    pool.query(query, [id], (err, result) => {
+      if (err) {
+        console.error("❌ Error en getVecinoPorId:", err);
+        reject(err);
+      } else {
+        console.log("✅ Resultado de getVecinoPorId:", result);
+        resolve(result[0]);
+      }
+    });
+  });
+}
+
+
+
+
 function registrarVecino(nombre, apellido, email, password) {
   return new Promise((resolve, reject) => {
     const checkQuery = 'SELECT id FROM vecinos WHERE email = ?';
@@ -37,7 +57,24 @@ function registrarVecino(nombre, apellido, email, password) {
   });
 }
 
+function getReclamosPorVecinoId(vecino_id) {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT id, tipo, descripcion, imagen_url, fecha FROM reclamos WHERE vecino_id = ?';
+    console.log("🔍 Buscando reclamos para vecino ID:", vecino_id);
+
+    pool.query(query, [vecino_id], (err, result) => {
+      if (err) {
+        console.error("❌ Error en getReclamosPorVecinoId:", err);
+        reject(err);
+      } else {
+        console.log("✅ Reclamos encontrados:", result.length);
+        resolve(result);
+      }
+    });
+  });
+}
 
 
 
-module.exports = { getVecino, registrarVecino };
+
+module.exports = { getVecino, getVecinoPorId, registrarVecino, getReclamosPorVecinoId };
