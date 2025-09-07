@@ -2,7 +2,7 @@ const pool = require('./bd');
 
 function getVecino(email, password) {
   return new Promise((resolve, reject) => {
-    const query = 'SELECT id, email, nombre FROM vecinos WHERE email = ? AND password = ?';
+    const query = 'SELECT id, email, nombre, apellido FROM vecinos WHERE email = ? AND password = ?';
     pool.query(query, [email, password], (err, result) => {
       if (err) {
         reject(err);
@@ -59,7 +59,7 @@ function registrarVecino(nombre, apellido, email, password) {
 
 function getReclamosPorVecinoId(vecino_id) {
   return new Promise((resolve, reject) => {
-    const query = 'SELECT id, tipo, descripcion, imagen_url, fecha FROM reclamos WHERE vecino_id = ?';
+    const query = 'SELECT id, tipo, descripcion, direccion, imagen_url, fecha FROM reclamos WHERE vecino_id = ?';
     console.log("🔍 Buscando reclamos para vecino ID:", vecino_id);
 
     pool.query(query, [vecino_id], (err, result) => {

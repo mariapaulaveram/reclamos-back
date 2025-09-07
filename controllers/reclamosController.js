@@ -3,16 +3,16 @@ const pool = require('../models/bd');
 const { subirImagen } = require('../services/cloudinaryService');
 
 exports.crearReclamo = async (req, res) => {
-  const { nombre, email, tipo, descripcion } = req.body;
+  const { nombre, apellido, email, tipo, descripcion, direccion } = req.body;
   const archivo = req.file;
   let imagenUrl = null;
 
   // Log inicial para depuración
-  console.log('Datos recibidos:', { nombre, email, tipo, descripcion });
+  console.log('Datos recibidos:', { nombre, apellido, email, tipo, descripcion, direccion });
   console.log('Archivo recibido:', archivo ? archivo.originalname : 'Sin imagen');
 
   // Validación básica
-  if (!nombre || !email || !tipo || !descripcion) {
+  if (!nombre || !apellido || !email || !tipo || !descripcion || !direccion) {
     console.warn('❌ Campos obligatorios faltantes');
     return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
@@ -29,16 +29,16 @@ exports.crearReclamo = async (req, res) => {
 
     if (imagenUrl) {
       query = `
-        INSERT INTO reclamos (nombre, email, tipo, descripcion, imagen_url)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, imagen_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
-      valores = [nombre, email, tipo, descripcion, imagenUrl];
+      valores = [nombre, apellido, email, tipo, descripcion, direccion, imagenUrl];
     } else {
       query = `
-        INSERT INTO reclamos (nombre, email, tipo, descripcion)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion)
+        VALUES (?, ?, ?, ?, ?, ?)
       `;
-      valores = [nombre, email, tipo, descripcion];
+      valores = [nombre, apellido, email, tipo, descripcion, direccion];
     }
 
     await pool.query(query, valores);

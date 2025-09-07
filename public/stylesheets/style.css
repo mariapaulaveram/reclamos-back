@@ -7,34 +7,33 @@
 
 /*Header*/
 
-header {
-  background-color: var(--color-fondo);
-  padding: 1.5rem 2rem;
-  margin: 0;
-  border-bottom: 1px solid var(--color-borde);
-}
-
-.logo {
+/* Hero Section */
+.heroBanner {
+  background-image: url('/images/banner.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 150px; /* Ajustá según tu diseño */
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.img_logo {
-  width: 50px;
-  height: auto;
-  object-fit: contain;
+  justify-content: center;
+  position: relative;
+  padding: 2rem;
+  color: white;
 }
 
 .titulo {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-texto);
-  margin: 0;
-  letter-spacing: 1px;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.hero {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 /*login*/
