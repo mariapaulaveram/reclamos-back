@@ -7,13 +7,14 @@ async function getReclamos(){
 }
 
 async function getReclamoById(id) {
-    var query = 'select * from s where id=?';
+    var query = 'select * from reclamos where id=?';
     var rows = await pool.query(query, [parseInt(id)]); 
     return rows[0];
 }
 
 async function insertReclamos(obj){
     try{
+        obj.estado = 'cargado'; // 👈 valor por defecto
         var query = "insert into reclamos set?";
         var rows = await pool.query(query, [obj])
         return rows;
@@ -30,16 +31,23 @@ async function deleteReclamosById(id) {
 }
 
 
-async function modificarReclamosById(obj, id){
-    try {
-        var query = 'update reclamos set ? where id=?';
-        var rows = await pool.query (query, [obj, id]);
-        return rows;
-    } catch (error){
-        throw error;
+async function modificarReclamoById(obj, id){
+  try {
+    const query = 'UPDATE reclamos SET ? WHERE id = ?';
+    const result = await pool.query(query, [obj, id]);
+
+
+    if (result.affectedRows === 0) {
+      throw new Error('No se encontró el reclamo para modificar');
     }
-    
+
+    return result;
+  } catch (error){
+    console.error('Error en modificarReclamosById:', error);
+    throw error;
+  }
 }
 
 
-module.exports = {getReclamos, insertReclamos, deleteReclamosById, getReclamoById, modificarReclamosById}
+
+module.exports = {getReclamos, insertReclamos, deleteReclamosById, getReclamoById, modificarReclamoById}

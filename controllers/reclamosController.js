@@ -1,20 +1,27 @@
 //integra con el front para subir los reclamos a la bd
+
 const pool = require('../models/bd');
 const { subirImagen } = require('../services/cloudinaryService');
 
 exports.crearReclamo = async (req, res) => {
   const { nombre, apellido, email, tipo, descripcion, direccion } = req.body;
+  const vecino_id = req.body.vecino_id;
+  const estado = 'cargado'; // 👈 valor por defecto
+
   const archivo = req.file;
   let imagenUrl = null;
 
   // Log inicial para depuración
-  console.log('Datos recibidos:', { nombre, apellido, email, tipo, descripcion, direccion });
+  console.log('Datos recibidos:', { nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado });
+
   console.log('Archivo recibido:', archivo ? archivo.originalname : 'Sin imagen');
 
+  // Valor por defecto para estado
+  const estadoFinal = estado || 'cargado';
   // Validación básica
-  if (!nombre || !apellido || !email || !tipo || !descripcion || !direccion) {
-    console.warn('❌ Campos obligatorios faltantes');
-    return res.status(400).json({ error: 'Faltan campos obligatorios' });
+  if (!nombre || !apellido || !email || !tipo || !descripcion || !direccion || !vecino_id || !estadoFinal) {
+  console.warn('❌ Campos obligatorios faltantes');
+  return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
 
   try {
@@ -28,18 +35,19 @@ exports.crearReclamo = async (req, res) => {
     let query, valores;
 
     if (imagenUrl) {
-      query = `
-        INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, imagen_url)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `;
-      valores = [nombre, apellido, email, tipo, descripcion, direccion, imagenUrl];
-    } else {
-      query = `
-        INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `;
-      valores = [nombre, apellido, email, tipo, descripcion, direccion];
-    }
+  query = `
+    INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, imagen_url, vecino_id, estado)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  valores = [nombre, apellido, email, tipo, descripcion, direccion, imagenUrl, vecino_id, estado];
+} else {
+  query = `
+    INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  valores = [nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado];
+}
+
 
     await pool.query(query, valores);
     console.log('✅ Reclamo guardado en la base de datos');

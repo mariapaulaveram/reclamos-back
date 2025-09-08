@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const { getVecino } = require('../models/vecinosModel');
@@ -10,6 +9,9 @@ router.post('/vecinos', async (req, res) => {
     const result = await getVecino(email, password);
 
     if (result.length > 0) {
+      // ✅ Guardar el ID del vecino en la sesión
+      req.session.vecino_id = result[0].id;
+
       res.status(200).json({ message: 'Login successful', vecino: result[0] });
     } else {
       res.status(401).json({ message: 'Login failed. Invalid username or password.' });
@@ -21,3 +23,4 @@ router.post('/vecinos', async (req, res) => {
 });
 
 module.exports = router;
+

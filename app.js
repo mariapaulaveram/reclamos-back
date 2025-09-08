@@ -18,6 +18,7 @@ var loginRouter = require('./routes/admin/login');
 var inicioRouter = require('./routes/admin/inicio');
 var apiRouter = require('./routes/api')
 var vecinosRouter = require('./routes/vecinos.js');
+var adminReclamosRouter = require('./routes/admin/admin-reclamos');
 
 var app = express();
 
@@ -67,6 +68,8 @@ app.use('/admin/login', loginRouter);
 app.use('/admin/inicio', inicioRouter);
 app.use('/api', apiRouter);
 app.use('/api', vecinosRouter);
+app.use('/admin/admin-reclamos', adminReclamosRouter);
+
 
 app.use(express.static('public'));
 
