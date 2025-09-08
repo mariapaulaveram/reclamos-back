@@ -201,3 +201,9 @@ h5 {
   margin-top: 40px;
   font-size: 0.85rem;
 }
+
+.footerEscudo img {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+}
