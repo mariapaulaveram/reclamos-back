@@ -6,7 +6,7 @@ const { subirImagen } = require('../services/cloudinaryService');
 exports.crearReclamo = async (req, res) => {
   const { nombre, apellido, email, tipo, descripcion, direccion } = req.body;
   const vecino_id = req.body.vecino_id;
-  const estado = 'cargado'; // 👈 valor por defecto
+  const estado = 'Nuevo'; // 👈 valor por defecto
 
   const archivo = req.file;
   let imagenUrl = null;
@@ -17,7 +17,7 @@ exports.crearReclamo = async (req, res) => {
   console.log('Archivo recibido:', archivo ? archivo.originalname : 'Sin imagen');
 
   // Valor por defecto para estado
-  const estadoFinal = estado || 'cargado';
+  const estadoFinal = estado || 'Nuevo';
   // Validación básica
   if (!nombre || !apellido || !email || !tipo || !descripcion || !direccion || !vecino_id || !estadoFinal) {
   console.warn('❌ Campos obligatorios faltantes');
