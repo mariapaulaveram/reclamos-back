@@ -1,10 +1,27 @@
 var pool = require('./bd');
 
-async function getReclamos(){
+/*async function getReclamos(){
     var query ='select * from reclamos';
     var rows = await pool.query(query);
     return rows;
+}*/
+
+/*async function getReclamos() {
+  var query = 'SELECT * FROM reclamos ORDER BY estado';
+  var rows = await pool.query(query);
+  return rows;
+}*/
+
+async function getReclamos() {
+  var query = `
+    SELECT * FROM reclamos
+    ORDER BY FIELD(estado, 'Nuevo', 'Cargado', 'En proceso', 'En revision','Resuelto', 'Cerrado')
+  `;
+  var rows = await pool.query(query);
+  return rows;
 }
+
+
 
 async function getReclamoById(id) {
     var query = 'select * from reclamos where id=?';
