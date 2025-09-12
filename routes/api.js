@@ -2,7 +2,7 @@ const pool = require('../models/bd');
 const express = require('express');
 const router = express.Router();
 const vecinosModel = require('../models/vecinosModel');
-
+const encuestasModel = require('../models/encuestasModel');
 
 // Ruta para login de vecinos
 router.post('/vecinos', async (req, res) => {
@@ -75,6 +75,39 @@ router.get('/vecinos/reclamos', async (req, res) => {
   }
 });
 
+/* Ruta para registrar encuesta */
+  router.post('/encuesta', async (req, res) => {
+  const { vecino_id, respuesta, comentario } = req.body;
+  console.log('📨 Datos recibidos en encuesta:', req.body);
+
+  if (!vecino_id || !respuesta) {
+    return res.status(400).json({ message: 'Faltan datos obligatorios' });
+  }
+
+  try {
+    // Verificamos que el vecino exista
+    const vecino = await vecinosModel.getVecinoPorId(vecino_id);
+    if (!vecino || !vecino.id) {
+      console.warn("⚠️ Vecino no encontrado con id:", vecino_id);
+      return res.status(404).json({ message: 'Vecino no encontrado' });
+    }
+
+    // Insertamos la encuesta
+    const nuevaEncuesta = {
+      vecino_id,
+      respuesta,
+      comentario,
+      fecha: new Date()
+    };
+
+    const resultado = await encuestasModel.insertEncuesta(nuevaEncuesta);
+    console.log('✅ Encuesta guardada:', resultado);
+    res.status(201).json({ message: 'Encuesta registrada correctamente' });
+  } catch (error) {
+    console.error('❌ Error al guardar encuesta:', error);
+    res.status(500).json({ message: 'Error en el servidor al guardar encuesta' });
+  }
+});
 
 
 module.exports = router;
