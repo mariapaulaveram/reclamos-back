@@ -77,10 +77,10 @@ router.get('/vecinos/reclamos', async (req, res) => {
 
 /* Ruta para registrar encuesta */
   router.post('/encuesta', async (req, res) => {
-  const { vecino_id, respuesta, comentario } = req.body;
+  const { vecino_id, satisfaccion, comentario } = req.body;
   console.log('📨 Datos recibidos en encuesta:', req.body);
 
-  if (!vecino_id || !respuesta) {
+  if (!vecino_id || !satisfaccion) {
     return res.status(400).json({ message: 'Faltan datos obligatorios' });
   }
 
@@ -95,7 +95,7 @@ router.get('/vecinos/reclamos', async (req, res) => {
     // Insertamos la encuesta
     const nuevaEncuesta = {
       vecino_id,
-      respuesta,
+      satisfaccion,
       comentario,
       fecha: new Date()
     };
