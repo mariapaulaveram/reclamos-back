@@ -21,22 +21,22 @@ router.get('/modificar/:id', async (req, res, next) => {
 });
 
 router.post('/modificar', async (req, res, next) => {
-  const { id, estado } = req.body;
-  console.log('POST /modificar → Datos recibidos:', { id, estado }); // 👈 Verificamos lo que llega del formulario
+  const { id, estado, comentarios } = req.body;
+  console.log('POST /modificar → Datos recibidos:', { id, estado, comentarios }); // 👈 Verificamos lo que llega del formulario
 
   try {
-    if (id && estado) {
-      const resultado = await reclamosModel.modificarReclamoById({ estado }, id);
+    if (id && estado && comentarios) {
+      const resultado = await reclamosModel.modificarReclamoById({ estado, comentarios }, id);
       console.log('Resultado de la modificación:', resultado); // 👈 Verificamos qué devuelve el modelo
 
       res.redirect('/admin/inicio');
     } else {
-      console.warn('Faltan datos para modificar:', { id, estado }); // 👈 Avisamos si falta algo
+      console.warn('Faltan datos para modificar:', { id, estado, comentarios }); // 👈 Avisamos si falta algo
 
       res.render('admin/modificar', {
         layout: 'admin/layout',
         error: true,
-        reclamo: { id, estado },
+        reclamo: { id, estado, comentarios },
         mensaje: 'El ID y el estado son obligatorios'
       });
     }

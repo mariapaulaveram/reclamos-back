@@ -7,19 +7,21 @@ exports.crearReclamo = async (req, res) => {
   const { nombre, apellido, email, tipo, descripcion, direccion } = req.body;
   const vecino_id = req.body.vecino_id;
   const estado = 'Nuevo'; // 👈 valor por defecto
+  const comentarios = 'Sin comentarios'; // 👈 valor por defecto
 
   const archivo = req.file;
   let imagenUrl = null;
 
   // Log inicial para depuración
-  console.log('Datos recibidos:', { nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado });
+  console.log('Datos recibidos:', { nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado, comentarios });
 
   console.log('Archivo recibido:', archivo ? archivo.originalname : 'Sin imagen');
 
   // Valor por defecto para estado
   const estadoFinal = estado || 'Nuevo';
+  
   // Validación básica
-  if (!nombre || !apellido || !email || !tipo || !descripcion || !direccion || !vecino_id || !estadoFinal) {
+  if (!nombre || !apellido || !email || !tipo || !descripcion || !direccion || !vecino_id || !estadoFinal || !comentarios) {
   console.warn('❌ Campos obligatorios faltantes');
   return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
@@ -36,16 +38,16 @@ exports.crearReclamo = async (req, res) => {
 
     if (imagenUrl) {
   query = `
-    INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, imagen_url, vecino_id, estado)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, imagen_url, vecino_id, estado, comentarios)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
-  valores = [nombre, apellido, email, tipo, descripcion, direccion, imagenUrl, vecino_id, estado];
+  valores = [nombre, apellido, email, tipo, descripcion, direccion, imagenUrl, vecino_id, estado, comentarios];
 } else {
   query = `
-    INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO reclamos (nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado, comentarios)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
-  valores = [nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado];
+  valores = [nombre, apellido, email, tipo, descripcion, direccion, vecino_id, estado, comentarios];
 }
 
 

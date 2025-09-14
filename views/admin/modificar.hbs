@@ -1,12 +1,16 @@
 <div class="container" style="margin: 100px auto">
     <div class="row">
         <div class="col-6 offset-3">
-            <h4>Modifica Estado del Reclamo</h4>
+            
             <form action="/admin/admin-reclamos/modificar" method="post">
                 <input type="hidden" name="id" value="{{reclamo.id}}">
-
+                <hp>Modifica Estado del Reclamo</p>
                 <div class="row mb-3">
                     <input type="text" class="form-control" name="estado" value="{{reclamo.estado}}">
+                </div>
+                <hp>Agrega comentarios al Reclamo</p>
+                <div class="row mb-3">
+                    <input type="text" class="form-control" name="comentarios" value="{{reclamo.comentarios}}">
                 </div>
 
                 <button type="submit" class="btn btn-secondary">Guardar</button>

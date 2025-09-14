@@ -22,7 +22,9 @@
                 <th>Dirección</th>
                 <th>Imagen</th>
                 <th>Estado</th>
+                <th>Comentarios</th>
                 <th class="text-end">Acciones</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -44,6 +46,7 @@
                     {{/if}}
                 </td>
                 <td>{{estado}}</td>
+                <td>{{comentarios}}</td>
                 <td class="text-end accionesClases">
                     <a href="/admin/admin-reclamos/modificar/{{id}}" class="iconoAccion">
                         <i class="fa-solid fa-pencil"></i>

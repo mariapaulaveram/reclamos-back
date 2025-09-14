@@ -59,7 +59,7 @@ function registrarVecino(nombre, apellido, email, password) {
 
 function getReclamosPorVecinoId(vecino_id) {
   return new Promise((resolve, reject) => {
-    const query = 'SELECT id, tipo, descripcion, direccion, imagen_url, fecha, estado FROM reclamos WHERE vecino_id = ?';
+    const query = 'SELECT id, tipo, descripcion, direccion, imagen_url, fecha, estado, comentarios FROM reclamos WHERE vecino_id = ?';
     console.log("🔍 Buscando reclamos para vecino ID:", vecino_id);
 
     pool.query(query, [vecino_id], (err, result) => {
