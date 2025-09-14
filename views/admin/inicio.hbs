@@ -1,4 +1,12 @@
-<div class="container mt-5">
+<nav>
+  <ul>
+    <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
+    <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
+    <li><a href="/admin/inicio">Volver al inicio</a></li>
+  </ul>
+</nav>
+
+<div class="container mt-5 seccion-inicio"">
   <div class="row saludo-usuario justify-content-end">
     <div class="col-auto">
       <p class="texto-saludo">
@@ -9,59 +17,5 @@
       </p>
     </div>
   </div>
-
-  <div class="row mb-3">
-    <div class="col">
-      <h3>Listado de Reclamos</h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>#ID Reclamo</th>
-            <th>Fecha</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Tipo de Reclamo</th>
-            <th>Descripción</th>
-            <th>Dirección</th>
-            <th>Imagen</th>
-            <th>Estado</th>
-            <th class="text-end">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each reclamos}}
-          <tr>
-            <th scope="row">{{id}}</th>
-            <td>{{fecha_formateada}}</td>
-            <td>{{nombre}}</td>
-            <td>{{apellido}}</td>
-            <td>{{email}}</td>
-            <td>{{tipo}}</td>
-            <td>{{descripcion}}</td>
-            <td>{{direccion}}</td>
-            <td>
-              {{#if imagen}}
-              <img src="{{imagen}}" alt="Imagen del reclamo" class="img-reclamo" />
-              {{else}}
-              <span class="text-muted">Sin imagen</span>
-              {{/if}}
-            </td>
-            <td>{{estado}}</td>
-            <td class="text-end accionesClases">
-                  <a href="/admin/admin-reclamos/modificar/{{id}}" class="iconoAccion">
-                    <i class="fa-solid fa-pencil"></i>
-                  </a>
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  </div>
 </div>
+

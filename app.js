@@ -16,9 +16,11 @@ var usersRouter = require('./routes/users');
 var reclamosRouter = require('./routes/reclamos'); // 👈 Nuevo router viene del front...
 var loginRouter = require('./routes/admin/login');
 var inicioRouter = require('./routes/admin/inicio');
-var apiRouter = require('./routes/api')
+var apiRouter = require('./routes/api');
 var vecinosRouter = require('./routes/vecinos.js');
 var adminReclamosRouter = require('./routes/admin/admin-reclamos');
+var verReclamosRouter = require('./routes/admin/verReclamos');
+const verEncuestaRouter = require('./routes/admin/verEncuesta');
 
 var app = express();
 
@@ -69,7 +71,8 @@ app.use('/admin/inicio', inicioRouter);
 app.use('/api', apiRouter);
 app.use('/api', vecinosRouter);
 app.use('/admin/admin-reclamos', adminReclamosRouter);
-
+app.use('/admin/verReclamos', verReclamosRouter);
+app.use('/admin/verEncuesta', verEncuestaRouter);
 
 app.use(express.static('public'));
 

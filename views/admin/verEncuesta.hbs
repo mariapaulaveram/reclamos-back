@@ -1,0 +1,34 @@
+<nav>
+    <ul>
+      <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
+      <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
+      <li><a href="/admin/inicio">Volver al inicio</a></li>
+    </ul>
+  </nav>
+
+<div class="table-wrapper">
+  <h3>Resultados de Encuestas</h3>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#ID</th>
+        <th>Fecha</th>
+        <th>Vecino_Id</th>
+        <th>Satisfacción</th>
+        <th>Comentarios</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each encuestas}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{fecha_formateada}}</td>
+        <td>{{vecino_id}}</td>
+        <td>{{satisfaccion}}</td>
+        <td>{{comentario}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
