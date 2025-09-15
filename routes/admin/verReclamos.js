@@ -15,7 +15,16 @@ function secured(req, res, next) {
 // Ruta para ver los reclamos
 router.get('/', secured, async function(req, res, next) {
   try {
-    let reclamos = await reclamosModel.getReclamos();
+    const estadoFiltro = req.query.estado;
+    console.log('Estado recibido:', estadoFiltro);
+
+
+    let reclamos;
+    if (estadoFiltro) {
+      reclamos = await reclamosModel.getReclamosPorEstado(estadoFiltro); // Usás un método filtrado
+    } else {
+      reclamos = await reclamosModel.getReclamos(); // Todos los reclamos
+    }
 
     reclamos = reclamos.map(reclamo => ({
       ...reclamo,
@@ -32,7 +41,8 @@ router.get('/', secured, async function(req, res, next) {
     res.render('admin/verReclamos', {
       layout: 'admin/layout',
       usuario: req.session.nombre,
-      reclamos
+      reclamos,
+      estadoSeleccionado: estadoFiltro // Para mantener el valor en el select
     });
 
   } catch (error) {
@@ -45,5 +55,6 @@ router.get('/', secured, async function(req, res, next) {
     });
   }
 });
+
 
 module.exports = router;

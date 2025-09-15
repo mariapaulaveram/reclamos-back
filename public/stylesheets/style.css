@@ -162,6 +162,44 @@ h3 {
   text-align: center;
 }
 
+.form-filtro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #eef2f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.form-filtro label {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+}
+
+.select-estado {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.select-estado:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+  outline: none;
+}
+
+.select-estado:hover {
+  border-color: #007bff;
+  cursor: pointer;
+}
+
+
 .table-wrapper {
   padding: 2rem;
   background-color: #ffffff;

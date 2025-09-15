@@ -42,6 +42,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+const hbs = require('hbs');
+
+hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
+  switch (operator) {
+    case '==': return (v1 == v2) ? options.fn(this) : options.inverse(this);
+    case '!=': return (v1 != v2) ? options.fn(this) : options.inverse(this);
+    case '>': return (v1 > v2) ? options.fn(this) : options.inverse(this);
+    case '<': return (v1 < v2) ? options.fn(this) : options.inverse(this);
+    default: return options.inverse(this);
+  }
+});
+
+
 app.use(session({
   secret: 'azzertotaucrot',
   cookie:{maxAge: null },

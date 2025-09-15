@@ -7,8 +7,20 @@
 </nav>
 <div class="table-wrapper">
     <h3>Listado de Reclamos</h3>
-
-
+    <form method="GET" action="/admin/verReclamos" class="form-filtro">
+        <label for="estado">Filtrar por estado:</label>
+        <select name="estado" id="estado" class="select-estado" onchange="this.form.submit()">
+            <option value="" {{#unless estadoSeleccionado}}selected{{/unless}}>Todos</option>
+            <option value="Nuevo" {{#ifCond estadoSeleccionado '==' 'Nuevo' }}selected{{/ifCond}}>Nuevo</option>
+            <option value="Cargado" {{#ifCond estadoSeleccionado '==' 'Cargado' }}selected{{/ifCond}}>Cargado</option>
+            <option value="En proceso" {{#ifCond estadoSeleccionado '==' 'En proceso' }}selected{{/ifCond}}>En proceso</option>
+            <option value="En revision" {{#ifCond estadoSeleccionado '==' 'En revision' }}selected{{/ifCond}}>En revision</option>
+            <option value="Resuelto" {{#ifCond estadoSeleccionado '==' 'Resuelto' }}selected{{/ifCond}}>Resuelto</option>
+            <option value="Cerrado" {{#ifCond estadoSeleccionado '==' 'Cerrado' }}selected{{/ifCond}}>Cerrado</option>
+        </select>
+    </form>
+    
+    
     <table class="table table-hover">
         <thead>
             <tr>
@@ -23,7 +35,7 @@
                 <th>Imagen</th>
                 <th>Estado</th>
                 <th>Comentarios</th>
-                <th class="text-end">Acciones</th>
+                <th class="text-end">Editar</th>
                 
             </tr>
         </thead>

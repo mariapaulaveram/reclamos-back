@@ -22,6 +22,17 @@ async function getReclamos() {
 }
 
 
+async function getReclamosPorEstado(estado) {
+  try {
+    const rows = await pool.query('SELECT * FROM reclamos WHERE estado = ?', [estado]);
+    return rows;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 
 async function getReclamoById(id) {
     var query = 'select * from reclamos where id=?';
@@ -67,4 +78,4 @@ async function modificarReclamoById(obj, id){
 
 
 
-module.exports = {getReclamos, insertReclamos, deleteReclamosById, getReclamoById, modificarReclamoById}
+module.exports = {getReclamos, getReclamosPorEstado ,insertReclamos, deleteReclamosById, getReclamoById, modificarReclamoById}
