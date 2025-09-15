@@ -32,6 +32,34 @@ async function getReclamosPorEstado(estado) {
   }
 }
 
+async function getReclamosPaginados(estado, limit, offset) {
+  let query = 'SELECT * FROM reclamos';
+  let params = [];
+
+  if (estado) {
+    query += ' WHERE estado = ?';
+    params.push(estado);
+  }
+
+  query += ' ORDER BY fecha DESC LIMIT ? OFFSET ?';
+  params.push(limit, offset);
+
+  const rows = await pool.query(query, params);
+  return rows;
+}
+
+async function contarReclamos(estado) {
+  let query = 'SELECT COUNT(*) AS total FROM reclamos';
+  let params = [];
+
+  if (estado) {
+    query += ' WHERE estado = ?';
+    params.push(estado);
+  }
+
+  const [result] = await pool.query(query, params);
+  return result.total;
+}
 
 
 async function getReclamoById(id) {
@@ -78,4 +106,4 @@ async function modificarReclamoById(obj, id){
 
 
 
-module.exports = {getReclamos, getReclamosPorEstado ,insertReclamos, deleteReclamosById, getReclamoById, modificarReclamoById}
+module.exports = {getReclamos, getReclamosPorEstado ,insertReclamos, getReclamosPaginados, contarReclamos,deleteReclamosById, getReclamoById, modificarReclamoById}

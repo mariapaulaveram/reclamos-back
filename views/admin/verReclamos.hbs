@@ -68,4 +68,28 @@
             {{/each}}
         </tbody>
     </table>
+    {{#if totalPages}}
+  <nav class="paginacion">
+    <ul class="pagination">
+      {{#ifCond currentPage '>' 1}}
+        <li class="page-item">
+          <a class="page-link" href="/admin/verReclamos?estado={{estadoSeleccionado}}&page={{subtract currentPage 1}}">Anterior</a>
+        </li>
+      {{/ifCond}}
+
+      {{#each (range 1 totalPages)}}
+        <li class="page-item {{#ifCond this '==' ../currentPage}}active{{/ifCond}}">
+          <a class="page-link" href="/admin/verReclamos?estado={{../estadoSeleccionado}}&page={{this}}">{{this}}</a>
+        </li>
+      {{/each}}
+
+      {{#ifCond currentPage '<' totalPages}}
+        <li class="page-item">
+          <a class="page-link" href="/admin/verReclamos?estado={{estadoSeleccionado}}&page={{add currentPage 1}}">Siguiente</a>
+        </li>
+      {{/ifCond}}
+    </ul>
+  </nav>
+{{/if}}
+
 </div>

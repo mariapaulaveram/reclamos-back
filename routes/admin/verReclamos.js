@@ -16,17 +16,18 @@ function secured(req, res, next) {
 router.get('/', secured, async function(req, res, next) {
   try {
     const estadoFiltro = req.query.estado;
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
+
     console.log('Estado recibido:', estadoFiltro);
+    console.log('Página actual:', page);
 
+    const total = await reclamosModel.contarReclamos(estadoFiltro);
+    const reclamos = await reclamosModel.getReclamosPaginados(estadoFiltro, limit, offset);
+    const totalPages = Math.ceil(total / limit);
 
-    let reclamos;
-    if (estadoFiltro) {
-      reclamos = await reclamosModel.getReclamosPorEstado(estadoFiltro); // Usás un método filtrado
-    } else {
-      reclamos = await reclamosModel.getReclamos(); // Todos los reclamos
-    }
-
-    reclamos = reclamos.map(reclamo => ({
+    const reclamosFormateados = reclamos.map(reclamo => ({
       ...reclamo,
       fecha_formateada: new Date(reclamo.fecha).toLocaleString('es-AR', {
         day: '2-digit',
@@ -41,8 +42,10 @@ router.get('/', secured, async function(req, res, next) {
     res.render('admin/verReclamos', {
       layout: 'admin/layout',
       usuario: req.session.nombre,
-      reclamos,
-      estadoSeleccionado: estadoFiltro // Para mantener el valor en el select
+      reclamos: reclamosFormateados,
+      estadoSeleccionado: estadoFiltro,
+      currentPage: page,
+      totalPages
     });
 
   } catch (error) {
@@ -55,6 +58,7 @@ router.get('/', secured, async function(req, res, next) {
     });
   }
 });
+
 
 
 module.exports = router;

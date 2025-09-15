@@ -54,6 +54,17 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
   }
 });
 
+hbs.registerHelper('range', function(start, end) {
+  let arr = [];
+  for (let i = start; i <= end; i++) {
+    arr.push(i);
+  }
+  return arr;
+});
+
+hbs.registerHelper('add', (a, b) => a + b);
+hbs.registerHelper('subtract', (a, b) => a - b);
+
 
 app.use(session({
   secret: 'azzertotaucrot',

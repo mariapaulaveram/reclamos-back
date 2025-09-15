@@ -231,30 +231,6 @@ h3 {
 }
 
 
-/*h3 {
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #2c3e50;
-}
-
-.table {
-  border: 1px solid #dee2e6;
-  border-radius: 6px;
-  overflow: hidden;
-  background-color: #fff;
-}
-
-.table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-  text-transform: capitalize;
-}
-
-.table td, .table th {
-  vertical-align: middle;
-  padding: 12px;
-}*/
-
 .img-reclamo {
   width: 70px;
   height: 70px;
@@ -262,6 +238,36 @@ h3 {
   border-radius: 4px;
   box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }
+
+.paginacion {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
 
 /*footer*/
 .footer {
