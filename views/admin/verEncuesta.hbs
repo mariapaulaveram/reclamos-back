@@ -1,34 +1,59 @@
 <nav>
-    <ul>
-      <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
-      <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
-      <li><a href="/admin/inicio">Volver al inicio</a></li>
-    </ul>
-  </nav>
+  <ul>
+    <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
+    <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
+    <li><a href="/admin/inicio">Volver al inicio</a></li>
+  </ul>
+</nav>
 
-<div class="table-wrapper">
-  <h3>Resultados de Encuestas</h3>
+<div class="table-wrapper encuesta-wrapper">
+  <h3 class="encuesta-titulo">Resultados de Encuesta</h3>
 
-  <table class="table table-hover">
-    <thead>
+  <table class="table table-hover encuesta-tabla">
+    <thead class="encuesta-thead">
       <tr>
-        <th>#ID</th>
-        <th>Fecha</th>
-        <th>Vecino_Id</th>
-        <th>Satisfacción</th>
-        <th>Comentarios</th>
+        <th class="encuesta-th">#ID</th>
+        <th class="encuesta-th">Fecha</th>
+        <th class="encuesta-th">Vecino_Id</th>
+        <th class="encuesta-th">Satisfacción</th>
+        <th class="encuesta-th">Comentarios</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="encuesta-tbody">
       {{#each encuestas}}
-      <tr>
-        <td>{{id}}</td>
-        <td>{{fecha_formateada}}</td>
-        <td>{{vecino_id}}</td>
-        <td>{{satisfaccion}}</td>
-        <td>{{comentario}}</td>
+      <tr class="encuesta-row">
+        <td class="encuesta-td">{{id}}</td>
+        <td class="encuesta-td">{{fecha_formateada}}</td>
+        <td class="encuesta-td">{{vecino_id}}</td>
+        <td class="encuesta-td">{{satisfaccion}}</td>
+        <td class="encuesta-td">{{comentario}}</td>
       </tr>
       {{/each}}
     </tbody>
   </table>
+
+  {{#if totalPages}}
+  <nav class="paginacion encuesta-paginacion">
+    <ul class="pagination encuesta-pagination">
+      {{#ifCond currentPage '>' 1}}
+      <li class="page-item encuesta-page-item">
+        <a class="page-link encuesta-page-link" href="/admin/verEncuesta?page={{subtract currentPage 1}}">Anterior</a>
+      </li>
+      {{/ifCond}}
+
+      {{#each (range 1 totalPages)}}
+      <li class="page-item encuesta-page-item {{#ifCond this '==' ../currentPage}}active{{/ifCond}}">
+        <a class="page-link encuesta-page-link" href="/admin/verEncuesta?page={{this}}">{{this}}</a>
+      </li>
+      {{/each}}
+
+      {{#ifCond currentPage '<' totalPages}}
+      <li class="page-item encuesta-page-item">
+        <a class="page-link encuesta-page-link" href="/admin/verEncuesta?page={{add currentPage 1}}">Siguiente</a>
+      </li>
+      {{/ifCond}}
+    </ul>
+  </nav>
+  {{/if}}
+
 </div>

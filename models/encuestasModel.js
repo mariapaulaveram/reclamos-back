@@ -6,6 +6,17 @@ async function getEncuestas() {
   return rows;
 }
 
+async function contarEncuestas() {
+  const [result] = await pool.query('SELECT COUNT(*) AS total FROM encuesta');
+  return result.total;
+}
+
+async function getEncuestasPaginadas(limit, offset) {
+  const rows = await pool.query('SELECT * FROM encuesta ORDER BY fecha DESC LIMIT ? OFFSET ?', [limit, offset]);
+  return rows;
+}
+
+
 async function getEncuestaById(id) {
   const query = 'SELECT * FROM encuesta WHERE id = ?';
   const rows = await pool.query(query, [parseInt(id)]);
@@ -32,6 +43,8 @@ async function getEncuestasByVecinoId(vecino_id) {
 
 module.exports = {
   getEncuestas,
+  contarEncuestas,
+  getEncuestasPaginadas,
   getEncuestaById,
   insertEncuesta,
   getEncuestasByVecinoId

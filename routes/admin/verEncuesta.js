@@ -15,9 +15,15 @@ function secured(req, res, next) {
 // Ruta para ver las encuestas
 router.get('/', secured, async function(req, res, next) {
   try {
-    let encuestas = await encuestasModel.getEncuestas();
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const offset = (page - 1) * limit;
 
-    encuestas = encuestas.map(encuesta => ({
+    const total = await encuestasModel.contarEncuestas();
+    const encuestas = await encuestasModel.getEncuestasPaginadas(limit, offset);
+    const totalPages = Math.ceil(total / limit);
+
+    const encuestasFormateadas = encuestas.map(encuesta => ({
       ...encuesta,
       fecha_formateada: new Date(encuesta.fecha).toLocaleString('es-AR', {
         day: '2-digit',
@@ -31,11 +37,13 @@ router.get('/', secured, async function(req, res, next) {
     res.render('admin/verEncuesta', {
       layout: 'admin/layout',
       usuario: req.session.nombre,
-      encuestas
+      encuestas: encuestasFormateadas,
+      currentPage: page,
+      totalPages
     });
 
   } catch (error) {
-    console.error('Error al obtener las encuestas:', error);
+    console.error('Error al obtener encuestas:', error);
     res.render('admin/verEncuesta', {
       layout: 'admin/layout',
       usuario: req.session.nombre,
@@ -44,5 +52,6 @@ router.get('/', secured, async function(req, res, next) {
     });
   }
 });
+
 
 module.exports = router;
