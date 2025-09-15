@@ -17,7 +17,7 @@ router.get('/', secured, async function(req, res, next) {
   try {
     const estadoFiltro = req.query.estado;
     const page = parseInt(req.query.page) || 1;
-    const limit = 5;
+    const limit = 3;
     const offset = (page - 1) * limit;
 
     console.log('Estado recibido:', estadoFiltro);
