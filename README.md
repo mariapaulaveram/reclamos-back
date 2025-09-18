@@ -66,6 +66,8 @@ npm start
 
 
 ## Estructura del proyecto
+
+```
 reclamos-back/
 ├── bin/
 │   └── www
@@ -113,7 +115,8 @@ reclamos-back/
 │
 ├── app.js
 ├── .env
-└── package.json
+└── package.json 
+```
 
 
 
