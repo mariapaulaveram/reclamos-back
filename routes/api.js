@@ -110,5 +110,7 @@ router.get('/vecinos/reclamos', async (req, res) => {
 });
 
 
+
+
 module.exports = router;
 

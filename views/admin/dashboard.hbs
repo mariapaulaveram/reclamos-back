@@ -1,0 +1,95 @@
+<nav>
+    <ul>
+        <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
+        <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
+        <li><a href="/admin/inicio">Volver al inicio</a></li>
+        <li><a href="/admin/dashboard">Ver Dashboard Reclamos</a></li>
+    </ul>
+</nav>
+
+<div class="dashboard-contenedor">
+
+  <div class="dashboard-bloque-horizontal">
+    <div class="dashboard-tabla-wrapper">
+      <h2 class="dashboard-titulo">Reclamos por tipo</h2>
+      <ul class="dashboard-lista-tipo">
+        {{#each reclamosPorTipo}}
+        <li class="dashboard-item-tipo">{{tipo}}: {{cantidad}}</li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="dashboard-grafico-wrapper">
+      <h2 class="dashboard-titulo">Gráfico de reclamos por tipo</h2>
+      <canvas id="graficoTipo"></canvas>
+    </div>
+  </div>
+
+  <div class="dashboard-bloque-horizontal">
+    <div class="dashboard-tabla-wrapper">
+      <h2 class="dashboard-titulo">Reclamos por estado</h2>
+      <table class="dashboard-tabla-estado">
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each reclamosPorEstado}}
+          <tr class="dashboard-fila-estado">
+            <td>{{estado}}</td>
+            <td>{{cantidad}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dashboard-grafico-wrapper">
+      <h2 class="dashboard-titulo">Gráfico de reclamos por estado</h2>
+      <canvas id="graficoEstado"></canvas>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+  const datosTipo = {{{datosTipo}}};
+  const datosEstado = {{{datosEstado}}};
+
+  const ctxTipo = document.getElementById('graficoTipo').getContext('2d');
+  new Chart(ctxTipo, {
+    type: 'bar',
+    data: {
+      labels: datosTipo.map(e => e.tipo),
+      datasets: [{
+        label: 'Cantidad por tipo',
+        data: datosTipo.map(e => e.cantidad),
+        backgroundColor: '#3498db'
+      }]
+    }
+  });
+
+    const ctxEstado = document.getElementById('graficoEstado').getContext('2d');
+    new Chart(ctxEstado, {
+        type: 'pie',
+        data: {
+            labels: datosEstado.map(e => e.estado),
+            datasets: [{
+                label: 'Cantidad por estado',
+                data: datosEstado.map(e => e.cantidad),
+                backgroundColor: [
+                    '#2ecc71', // verde
+                    '#f1c40f', // amarillo
+                    '#e74c3c', // rojo
+                    '#3498db', // azul
+                    '#9b59b6', // violeta
+                    '#e67e22'  // naranja
+                ]
+
+            }]
+        }
+    });
+</script>

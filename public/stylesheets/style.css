@@ -331,6 +331,95 @@ h3 {
   border-color: #007bff;
 }
 
+/* Títulos del dashboard */
+.dashboard-titulo {
+  font-family: 'Segoe UI', sans-serif;
+  color: #2c3e50;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 22px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+}
+
+/* Lista de tipos de reclamos */
+.dashboard-lista-tipo {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-item-tipo {
+  background-color: #ecf0f1;
+  margin: 6px 0;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #34495e;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Tabla de estados */
+.dashboard-contenedor {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dashboard-bloque-horizontal {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.dashboard-tabla-wrapper,
+.dashboard-grafico-wrapper {
+  flex: 1 1 45%;
+  min-width: 300px;
+}
+
+.dashboard-grafico-wrapper canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+}
+
+.dashboard-tabla-estado {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-tabla-estado th,
+.dashboard-tabla-estado td {
+  border: 1px solid #bdc3c7;
+  padding: 12px;
+  text-align: left;
+}
+
+.dashboard-tabla-estado th {
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+}
+
+.dashboard-fila-estado:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dashboard-fila-estado:hover {
+  background-color: #eaf2f8;
+}
+
+
 
 /*footer*/
 .footer {

@@ -104,6 +104,16 @@ async function modificarReclamoById(obj, id){
   }
 }
 
+async function contarPorTipo() {
+  const rows = await pool.query('SELECT tipo, COUNT(*) as cantidad FROM reclamos GROUP BY tipo');
+  return rows;
 
+}
 
-module.exports = {getReclamos, getReclamosPorEstado ,insertReclamos, getReclamosPaginados, contarReclamos,deleteReclamosById, getReclamoById, modificarReclamoById}
+async function contarPorEstado() {
+  const rows = await pool.query('SELECT estado, COUNT(*) as cantidad FROM reclamos GROUP BY estado');
+  return rows;
+
+}
+
+module.exports = {getReclamos, getReclamosPorEstado ,insertReclamos, getReclamosPaginados, contarReclamos,deleteReclamosById, getReclamoById, modificarReclamoById, contarPorTipo, contarPorEstado}
