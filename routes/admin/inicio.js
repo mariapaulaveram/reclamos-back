@@ -14,9 +14,13 @@ function secured(req, res, next) {
 
 // Ruta de inicio (sin cargar reclamos)
 router.get('/', secured, function(req, res, next) {
+  const notificacionCorreo = req.session.notificacionCorreo;
+  delete req.session.notificacionCorreo;
+
   res.render('admin/inicio', {
     layout: 'admin/layout',
-    usuario: req.session.nombre
+    usuario: req.session.nombre,
+    notificacionCorreo
   });
 });
 

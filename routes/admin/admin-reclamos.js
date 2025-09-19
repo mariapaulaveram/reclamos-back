@@ -66,7 +66,7 @@ router.post('/modificar', async (req, res, next) => {
           }
         }
       }
-
+      req.session.notificacionCorreo = 'Se envió una notificación al vecino por correo electrónico.';
       res.redirect('/admin/inicio');
     } else {
       console.warn('Faltan datos para modificar:', { id, estado, comentarios });
