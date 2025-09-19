@@ -1,6 +1,8 @@
 const pool = require('../models/bd');
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
+const enviarCorreo = require('../services/enviarCorreo');
 const vecinosModel = require('../models/vecinosModel');
 const encuestasModel = require('../models/encuestasModel');
 
@@ -51,8 +53,8 @@ router.get('/vecinos/reclamos', async (req, res) => {
   console.log("📩 Id recibido en reclamos:", req.query.vecino_id);
 
   if (isNaN(vecino_id) || vecino_id <= 0) {
-  return res.status(400).json({ message: "Id inválido" });
-}
+    return res.status(400).json({ message: "Id inválido" });
+  }
 
 
   try {
@@ -64,7 +66,7 @@ router.get('/vecinos/reclamos', async (req, res) => {
     if (!vecino || !vecino.id) {
       console.warn("⚠️ Vecino no encontrado con id:", vecino_id);
       return res.status(404).json({ message: 'Vecino no encontrado' });
-    }  
+    }
 
     const reclamos = await vecinosModel.getReclamosPorVecinoId(vecino.id);
     console.log(`📦 Reclamos encontrados para vecino ${vecino.id}:`, reclamos.length);
@@ -76,7 +78,7 @@ router.get('/vecinos/reclamos', async (req, res) => {
 });
 
 /* Ruta para registrar encuesta */
-  router.post('/encuesta', async (req, res) => {
+router.post('/encuesta', async (req, res) => {
   const { vecino_id, satisfaccion, comentario } = req.body;
   console.log('📨 Datos recibidos en encuesta:', req.body);
 
@@ -108,6 +110,67 @@ router.get('/vecinos/reclamos', async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor al guardar encuesta' });
   }
 });
+
+// recuperar contraseña
+router.post('/recuperar', async (req, res) => {
+  const { email } = req.body;
+  const usuario = await pool.query('SELECT * FROM vecinos WHERE email = ?', [email]);
+
+  if (usuario.length === 0) return res.status(404).send('Email no registrado');
+
+  const token = crypto.randomBytes(20).toString('hex');
+  const expiracion = Date.now() + 3600000; // 1 hora
+
+  await pool.query('UPDATE vecinos SET reset_token = ?, reset_expiracion = ? WHERE email = ?', [token, expiracion, email]);
+
+  const enlace = `http://localhost:5173/restablecer/${token}`;
+  const mensajeHTML = `
+  <div style="font-family: Arial, sans-serif; color: #333;">
+    <h2 style="color: #007bff;">Restablecer tu contraseña</h2>
+    <p>Hola,</p>
+    <p>Recibimos una solicitud para restablecer tu contraseña en <strong>Voz Ciudadana</strong>.</p>
+    <p>Hacé clic en el siguiente botón para establecer una nueva contraseña:</p>
+    <p style="margin: 20px 0;">
+      <a href="${enlace}" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+        Restablecer contraseña
+      </a>
+    </p>
+    <p>Este enlace expirará en 1 hora por seguridad.</p>
+    <p>Si no solicitaste este cambio, ignorá este mensaje.</p>
+    <br>
+    <p>Gracias,<br>El equipo de Voz Ciudadana</p>
+  </div>
+`;
+
+  await enviarCorreo(email, 'Restablecer contraseña - Voz Ciudadana', mensajeHTML);
+
+
+  res.send('Correo enviado');
+});
+
+//restablecer contraseña
+const md5 = require('md5');
+
+router.post('/restablecer/:token', async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const usuarios = await pool.query('SELECT * FROM vecinos WHERE reset_token = ?', [token]);
+  const usuario = usuarios[0];
+
+  if (!usuario || Date.now() > usuario.reset_expiracion) {
+    return res.status(400).send('Token inválido o expirado');
+  }
+
+  const hashedPassword = md5(password);
+  await pool.query(
+    'UPDATE vecinos SET password = ?, reset_token = NULL, reset_expiracion = NULL WHERE id = ?',
+    [hashedPassword, usuario.id]
+  );
+
+  res.send('Contraseña actualizada correctamente');
+});
+
 
 
 

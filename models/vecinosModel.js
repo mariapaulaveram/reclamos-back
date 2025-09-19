@@ -1,9 +1,12 @@
 const pool = require('./bd');
+const md5 = require('md5');
+
 
 function getVecino(email, password) {
   return new Promise((resolve, reject) => {
+    const hashedPassword = md5(password); // 🔐 encriptamos la contraseña ingresada
     const query = 'SELECT id, email, nombre, apellido FROM vecinos WHERE email = ? AND password = ?';
-    pool.query(query, [email, password], (err, result) => {
+    pool.query(query, [email, hashedPassword], (err, result) => {
       if (err) {
         reject(err);
       } else {
@@ -29,9 +32,6 @@ function getVecinoPorId(id) {
     });
   });
 }
-
-
-
 
 function registrarVecino(nombre, apellido, email, password) {
   return new Promise((resolve, reject) => {
