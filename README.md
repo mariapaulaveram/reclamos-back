@@ -33,24 +33,18 @@ npm start
 
 ## Dependencias principales
 - express – Framework web
-
 - mysql2 – Conexión con base de datos MySQL
-
 - express-session – Manejo de sesiones
-
 - cors – Permite peticiones desde el frontend
-
 - dotenv – Variables de entorno
-
 - express-fileupload y multer – Manejo de archivos
-
 - cloudinary y streamifier – Subida de imágenes
-
 - hbs – Motor de plantillas Handlebars
-
 - md5 – Encriptación de contraseñas
-
+- nodemailer – Envío de correos electrónicos para recuperación de contraseña
+- crypto – Generación de tokens seguros para restablecimiento
 - cookie-parser, morgan, http-errors, debug – Utilidades varias
+
 
 
 ## Middleware y configuración
@@ -217,4 +211,39 @@ Las rutas administrativas están protegidas con middleware secured.
 
 Las sesiones se manejan con express-session.
 
+### Notas de seguridad
+Nota: md5 se utiliza por simplicidad en este proyecto. Para entornos productivos se recomienda usar algoritmos más seguros como bcrypt o argon2.
+
+
+## Recuperación de contraseña
+Se implementó una funcionalidad para que los vecinos puedan restablecer su contraseña en caso de olvido.
+
+### Endpoints de recuperación de contraseña
+
+| Método | Ruta                          | Descripción                                                |
+|--------|-------------------------------|-----------------------------------------------------       |
+| POST   | `/api/recuperar`              | Genera token y envía correo con enlace de restablecimiento |
+| POST   | `/api/restablecer/:token`     | Valida token y actualiza la contraseña encriptada          |
+
+
+### Detalles técnicos:
+- Se utiliza nodemailer para enviar correos desde vozciudadana.municipio@gmail.com
+
+- El token se genera con crypto.randomBytes y expira en 1 hora
+
+- El token y su expiración se almacenan en la tabla vecinos (reset_token, reset_expiracion)
+
+- Las contraseñas se encriptan con md5 antes de guardarse
+
+- Las variables de entorno necesarias:
+
+EMAIL_USER=vozciudadana.municipio@gmail.com
+EMAIL_PASSWORD=tu_app_password
+
+### **Flujo de recuperación:**
+1. El vecino solicita recuperar su contraseña → `/api/recuperar`
+2. Se genera un token y se envía por correo
+3. El vecino accede al enlace → `/restablecer/:token`
+4. Envía nueva contraseña → `/api/restablecer/:token`
+5. Se actualiza la contraseña en la base de datos
 
