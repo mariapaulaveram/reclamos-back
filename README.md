@@ -94,6 +94,7 @@ reclamos-back/
 │
 ├── services/
 │   └── cloudinaryServices.js
+│   └── enviarCorreo.js
 │
 ├── views/
 │   ├── error.hbs
@@ -111,7 +112,6 @@ reclamos-back/
 ├── .env
 └── package.json 
 ```
-
 
 
 ## Autenticación
@@ -180,6 +180,9 @@ CLOUDINARY_NAME=tu_cloud_name
 CLOUDINARY_API_KEY=tu_api_key
 CLOUDINARY_API_SECRET=tu_api_secret
 
+EMAIL_USER=vozciudadana.municipio@gmail.com   
+EMAIL_PASSWORD= clave_secreta
+
 Usá dotenv para cargar estas variables en app.js y en los módulos que lo necesiten.
 
 
@@ -247,3 +250,53 @@ EMAIL_PASSWORD=tu_app_password
 4. Envía nueva contraseña → `/api/restablecer/:token`
 5. Se actualiza la contraseña en la base de datos
 
+## Modificación de reclamos y notificación al vecino
+El administrador municipal puede modificar el estado y/o agregar comentarios a un reclamo desde el panel interno. Esta acción genera una notificación automática al vecino por correo electrónico y una alerta en pantalla para el municipal.
+
+### Endpoint involucrado
+
+| Método | Ruta                         | Descripción                                                                  |
+|--------|------------------------------|------------------------------------------------------------------------------|
+| POST   | `/admin/admin-reclamos/modificar` | Actualiza el estado y/o comentario de un reclamo. Notifica al vecino por mail |
+
+
+### Lógica del proceso
+Recepción de datos: Se espera id, estado y comentarios en el req.body.
+
+Comparación de cambios: Se consulta el reclamo actual y se detecta si hubo modificación en el estado o comentario.
+
+Actualización en base de datos: Se actualiza el reclamo si hubo cambios.
+
+***Notificación por correo***
+Si el estado o comentario cambió, se envía un correo al vecino informando la actualización.
+
+El correo incluye el nuevo estado y/o comentario.
+
+***Alerta en pantalla del municipal***
+Se guarda un mensaje en req.session.notificacionCorreo que se muestra en la vista /admin/inicio.
+
+### Ejemplo de correo enviado al vecino
+
+Asunto: Actualización de tu reclamo – Voz Ciudadana
+
+Hola [Nombre del vecino],
+
+Tu reclamo ha sido actualizado por el municipio.
+
+Nuevo estado: [estado]
+Comentario: [comentarios]
+
+Podés hacer seguimiento desde la plataforma Voz Ciudadana.
+
+Gracias,
+El equipo de Voz Ciudadana
+
+
+### Tecnologías involucradas
+nodemailer: para el envío de correos electrónicos.
+
+express-session: para mostrar alertas en el panel del municipal.
+
+reclamosModel: para obtener y modificar el reclamo en la base de datos.
+
+modificar.hbs y inicio.hbs: vistas que permiten editar y visualizar el resultado.
