@@ -1,96 +1,119 @@
 <nav>
-    <ul>
-        <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
-        <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
-        <li><a href="/admin/inicio">Volver al inicio</a></li>
-        <li><a href="/admin/dashboard">Ver Dashboard Reclamos</a></li>
-    </ul>
+  <ul>
+    <li><a href="/admin/verReclamos">Ver Reclamos</a></li>
+    <li><a href="/admin/verEncuesta">Resultados de Encuesta</a></li>
+    <li><a href="/admin/inicio">Volver al inicio</a></li>
+    <li><a href="/admin/dashboard">Ver Dashboard Reclamos</a></li>
+  </ul>
 </nav>
+
 <div class="table-wrapper">
-    <h3>Listado de Reclamos</h3>
-    <form method="GET" action="/admin/verReclamos" class="form-filtro">
-        <label for="estado">Filtrar por estado:</label>
-        <select name="estado" id="estado" class="select-estado" onchange="this.form.submit()">
-            <option value="" {{#unless estadoSeleccionado}}selected{{/unless}}>Todos</option>
-            <option value="Nuevo" {{#ifCond estadoSeleccionado '==' 'Nuevo' }}selected{{/ifCond}}>Nuevo</option>
-            <option value="Cargado" {{#ifCond estadoSeleccionado '==' 'Cargado' }}selected{{/ifCond}}>Cargado</option>
-            <option value="En proceso" {{#ifCond estadoSeleccionado '==' 'En proceso' }}selected{{/ifCond}}>En proceso</option>
-            <option value="En revision" {{#ifCond estadoSeleccionado '==' 'En revision' }}selected{{/ifCond}}>En revision</option>
-            <option value="Resuelto" {{#ifCond estadoSeleccionado '==' 'Resuelto' }}selected{{/ifCond}}>Resuelto</option>
-            <option value="Cerrado" {{#ifCond estadoSeleccionado '==' 'Cerrado' }}selected{{/ifCond}}>Cerrado</option>
-        </select>
-    </form>
-    
-    
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>#ID Reclamo</th>
-                <th>Fecha</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Tipo de Reclamo</th>
-                <th>Descripción</th>
-                <th>Dirección</th>
-                <th>Imagen</th>
-                <th>Estado</th>
-                <th>Comentarios</th>
-                <th class="text-end">Editar</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            {{#each reclamos}}
-            <tr>
-                <th scope="row">{{id}}</th>
-                <td>{{fecha_formateada}}</td>
-                <td>{{nombre}}</td>
-                <td>{{apellido}}</td>
-                <td>{{email}}</td>
-                <td>{{tipo}}</td>
-                <td>{{descripcion}}</td>
-                <td>{{direccion}}</td>
-                <td>
-                    {{#if imagen}}
-                    <img src="{{imagen}}" alt="Imagen del reclamo" class="img-reclamo" />
-                    {{else}}
-                    <span class="text-muted">Sin imagen</span>
-                    {{/if}}
-                </td>
-                <td>{{estado}}</td>
-                <td>{{comentarios}}</td>
-                <td class="text-end accionesClases">
-                    <a href="/admin/admin-reclamos/modificar/{{id}}" class="iconoAccion">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    {{#if totalPages}}
+  <h3>Listado de Reclamos</h3>
+
+  <form method="GET" action="/admin/verReclamos" class="form-filtro">
+    <div class="filtro-item">
+      <label for="estado">Estado:</label>
+      <select name="estado" id="estado" class="filtro-select" onchange="this.form.submit()">
+        <option value="" {{#unless estadoSeleccionado}}selected{{/unless}}>Todos</option>
+        <option value="Nuevo" {{#ifCond estadoSeleccionado '==' 'Nuevo' }}selected{{/ifCond}}>Nuevo</option>
+        <option value="Cargado" {{#ifCond estadoSeleccionado '==' 'Cargado' }}selected{{/ifCond}}>Cargado</option>
+        <option value="En proceso" {{#ifCond estadoSeleccionado '==' 'En proceso' }}selected{{/ifCond}}>En proceso
+        </option>
+        <option value="En revision" {{#ifCond estadoSeleccionado '==' 'En revision' }}selected{{/ifCond}}>En revisión
+        </option>
+        <option value="Resuelto" {{#ifCond estadoSeleccionado '==' 'Resuelto' }}selected{{/ifCond}}>Resuelto</option>
+        <option value="Cerrado" {{#ifCond estadoSeleccionado '==' 'Cerrado' }}selected{{/ifCond}}>Cerrado</option>
+      </select>
+    </div>
+
+    <div class="filtro-item">
+      <label for="tipo">Tipo:</label>
+      <select name="tipo" id="tipo" class="filtro-select" onchange="this.form.submit()">
+        <option value="" {{#unless tipoSeleccionado}}selected{{/unless}}>Todos</option>
+        <option value="basural" {{#ifCond tipoSeleccionado '==' 'basural' }}selected{{/ifCond}}>Basural</option>
+        <option value="recoleccion" {{#ifCond tipoSeleccionado '==' 'recoleccion' }}selected{{/ifCond}}>Recolección
+        </option>
+        <option value="ramas" {{#ifCond tipoSeleccionado '==' 'ramas' }}selected{{/ifCond}}>Ramas</option>
+        <option value="otros" {{#ifCond tipoSeleccionado '==' 'otros' }}selected{{/ifCond}}>Otros</option>
+      </select>
+    </div>
+
+    <div class="filtro-item">
+      <label for="fecha">Fecha:</label>
+      <input type="date" name="fecha" id="fecha" class="filtro-select" value="{{fechaSeleccionada}}"
+        onchange="this.form.submit()" />
+    </div>
+  </form>
+
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#ID Reclamo</th>
+        <th>Fecha</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Tipo de Reclamo</th>
+        <th>Descripción</th>
+        <th>Dirección</th>
+        <th>Imagen</th>
+        <th>Estado</th>
+        <th>Comentarios</th>
+        <th class="text-end">Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each reclamos}}
+      <tr>
+        <th scope="row">{{id}}</th>
+        <td>{{fecha_formateada}}</td>
+        <td>{{nombre}}</td>
+        <td>{{apellido}}</td>
+        <td>{{email}}</td>
+        <td>{{tipo}}</td>
+        <td>{{descripcion}}</td>
+        <td>{{direccion}}</td>
+        <td>
+          {{#if imagen}}
+            <img src="{{imagen}}" alt="Imagen del reclamo" class="img-reclamo" />
+          {{else}}
+            <span class="text-muted">Sin imagen</span>
+          {{/if}}
+        </td>
+        <td>{{estado}}</td>
+        <td>{{comentarios}}</td>
+        <td class="text-end accionesClases">
+          <a href="/admin/admin-reclamos/modificar/{{id}}" class="iconoAccion">
+            <i class="fa-solid fa-pencil"></i>
+          </a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  {{#if totalPages}}
   <nav class="paginacion">
     <ul class="pagination">
       {{#ifCond currentPage '>' 1}}
         <li class="page-item">
-          <a class="page-link" href="/admin/verReclamos?estado={{estadoSeleccionado}}&page={{subtract currentPage 1}}">Anterior</a>
+          <a class="page-link" href="/admin/verReclamos?estado={{estadoSeleccionado}}&tipo={{tipoSeleccionado}}&fecha={{fechaSeleccionada}}&page={{subtract currentPage 1}}">Anterior</a>
         </li>
       {{/ifCond}}
 
       {{#each (range 1 totalPages)}}
         <li class="page-item {{#ifCond this '==' ../currentPage}}active{{/ifCond}}">
-          <a class="page-link" href="/admin/verReclamos?estado={{../estadoSeleccionado}}&page={{this}}">{{this}}</a>
+          <a class="page-link" href="/admin/verReclamos?estado={{../estadoSeleccionado}}&tipo={{../tipoSeleccionado}}&fecha={{../fechaSeleccionada}}&page={{this}}">{{this}}</a>
         </li>
       {{/each}}
 
       {{#ifCond currentPage '<' totalPages}}
         <li class="page-item">
-          <a class="page-link" href="/admin/verReclamos?estado={{estadoSeleccionado}}&page={{add currentPage 1}}">Siguiente</a>
+          <a class="page-link" href="/admin/verReclamos?estado={{estadoSeleccionado}}&tipo={{tipoSeleccionado}}&fecha={{fechaSeleccionada}}&page={{add currentPage 1}}">Siguiente</a>
         </li>
       {{/ifCond}}
     </ul>
   </nav>
-{{/if}}
-
+  {{/if}}
 </div>

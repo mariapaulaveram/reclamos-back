@@ -15,16 +15,20 @@ function secured(req, res, next) {
 // Ruta para ver los reclamos
 router.get('/', secured, async function(req, res, next) {
   try {
-    const estadoFiltro = req.query.estado;
+    const estadoFiltro = req.query.estado || null;
+    const tipoFiltro = req.query.tipo || null;
+    const fechaFiltro = req.query.fecha || null;
     const page = parseInt(req.query.page) || 1;
     const limit = 3;
     const offset = (page - 1) * limit;
 
     console.log('Estado recibido:', estadoFiltro);
+    console.log('Tipo recibido:', tipoFiltro);
+    console.log('Fecha recibida:', fechaFiltro);
     console.log('Página actual:', page);
 
-    const total = await reclamosModel.contarReclamos(estadoFiltro);
-    const reclamos = await reclamosModel.getReclamosPaginados(estadoFiltro, limit, offset);
+    const total = await reclamosModel.contarReclamos(estadoFiltro, tipoFiltro, fechaFiltro);
+    const reclamos = await reclamosModel.getReclamosPaginados(estadoFiltro, tipoFiltro, fechaFiltro, limit, offset);
     const totalPages = Math.ceil(total / limit);
 
     const reclamosFormateados = reclamos.map(reclamo => ({
@@ -44,6 +48,8 @@ router.get('/', secured, async function(req, res, next) {
       usuario: req.session.nombre,
       reclamos: reclamosFormateados,
       estadoSeleccionado: estadoFiltro,
+      tipoSeleccionado: tipoFiltro,
+      fechaSeleccionada: fechaFiltro,
       currentPage: page,
       totalPages
     });
@@ -58,7 +64,6 @@ router.get('/', secured, async function(req, res, next) {
     });
   }
 });
-
 
 
 module.exports = router;

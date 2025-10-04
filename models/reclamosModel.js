@@ -1,16 +1,5 @@
 var pool = require('./bd');
 
-/*async function getReclamos(){
-    var query ='select * from reclamos';
-    var rows = await pool.query(query);
-    return rows;
-}*/
-
-/*async function getReclamos() {
-  var query = 'SELECT * FROM reclamos ORDER BY estado';
-  var rows = await pool.query(query);
-  return rows;
-}*/
 
 async function getReclamos() {
   var query = `
@@ -32,33 +21,38 @@ async function getReclamosPorEstado(estado) {
   }
 }
 
-async function getReclamosPaginados(estado, limit, offset) {
-  let query = 'SELECT * FROM reclamos';
+async function getReclamosPaginados(estado, tipo, fecha, limit, offset) {
+  limit = parseInt(limit) || 3;
+  offset = parseInt(offset) || 0;
+
+  let query = 'SELECT * FROM reclamos WHERE 1=1';
   let params = [];
 
   if (estado) {
-    query += ' WHERE estado = ?';
+    query += ' AND estado = ?';
     params.push(estado);
+  }
+
+  if (tipo && typeof tipo === 'string') {
+    query += ' AND tipo = ?';
+    params.push(tipo);
+  }
+
+  if (fecha) {
+    query += ' AND DATE(fecha) = ?';
+    params.push(fecha);
   }
 
   query += ' ORDER BY fecha DESC LIMIT ? OFFSET ?';
   params.push(limit, offset);
 
-  const rows = await pool.query(query, params);
-  return rows;
-}
-
-async function contarReclamos(estado) {
-  let query = 'SELECT COUNT(*) AS total FROM reclamos';
-  let params = [];
-
-  if (estado) {
-    query += ' WHERE estado = ?';
-    params.push(estado);
+  try {
+    const rows = await pool.query(query, params);
+    return rows;
+  } catch (error) {
+    console.error('Error en getReclamosPaginados:', error);
+    throw error;
   }
-
-  const [result] = await pool.query(query, params);
-  return result.total;
 }
 
 
@@ -115,5 +109,29 @@ async function contarPorEstado() {
   return rows;
 
 }
+
+async function contarReclamos(estado, tipo, fecha) {
+  let query = 'SELECT COUNT(*) AS total FROM reclamos WHERE 1=1';
+  let params = [];
+
+  if (estado) {
+    query += ' AND estado = ?';
+    params.push(estado);
+  }
+
+  if (tipo) {
+    query += ' AND tipo = ?';
+    params.push(tipo);
+  }
+
+  if (fecha) {
+    query += ' AND DATE(fecha) = ?';
+    params.push(fecha);
+  }
+
+  const [result] = await pool.query(query, params);
+  return result.total;
+}
+
 
 module.exports = {getReclamos, getReclamosPorEstado ,insertReclamos, getReclamosPaginados, contarReclamos,deleteReclamosById, getReclamoById, modificarReclamoById, contarPorTipo, contarPorEstado}
