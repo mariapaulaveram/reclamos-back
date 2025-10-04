@@ -150,7 +150,7 @@ app.use('/api', vecinosRouter);                 // API para vecinos
 | POST   | `/admin/login`                   | Procesa credenciales y crea sesión                                     |
 | GET    | `/admin/login/logout`            | Cierra sesión y redirige al login                                      |
 | GET    | `/admin/inicio`                  | Muestra el panel de inicio del administrador (requiere sesión)         |
-| GET    | `/admin/verReclamos`             | Lista reclamos con paginación y filtro por estado                      |
+| GET    | `/admin/verReclamos`             | Lista reclamos con paginación y filtro por estado, tipo o fecha        |
 | GET    | `/admin/verEncuesta`             | Lista encuestas con paginación                                         |
 | GET    | `/admin/reclamos/modificar/:id`  | Renderiza formulario para modificar un reclamo específico              |
 | POST   | `/admin/reclamos/modificar`      | Procesa la modificación de un reclamo                                  |
@@ -167,6 +167,18 @@ app.use('/api', vecinosRouter);                 // API para vecinos
 | POST   | `/vecinos/registro`           | Registro de nuevo vecino                                               |
 | GET    | `/vecinos/reclamos`           | Obtiene los reclamos asociados a un vecino por ID                      |
 | POST   | `/encuesta`                   | Registra una encuesta de satisfacción vinculada a un vecino            |
+
+
+
+## Filtros disponibles en /admin/verReclamos
+El panel administrativo permite visualizar los reclamos municipales aplicando filtros combinables para facilitar la gestión y el seguimiento. Estos filtros se aplican automáticamente al seleccionarlos y se mantienen activos durante la navegación paginada.
+
+### Filtros disponibles:
+***Estado*** Permite filtrar por el estado actual del reclamo: Nuevo, Cargado, En proceso, En revisión, Resuelto, Cerrado.
+
+***Tipo*** Clasifica el tipo de reclamo según su naturaleza: basural, recoleccion, ramas, otros.
+
+***Fecha*** Permite seleccionar una fecha específica en formato YYYY-MM-DD para visualizar reclamos registrados ese día.
 
 
 ## Variables de entorno

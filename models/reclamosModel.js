@@ -21,7 +21,7 @@ async function getReclamosPorEstado(estado) {
   }
 }
 
-async function getReclamosPaginados(estado, tipo, fecha, limit, offset) {
+async function getReclamosPaginados(estado, tipo, fecha, busqueda, limit, offset) {
   limit = parseInt(limit) || 3;
   offset = parseInt(offset) || 0;
 
@@ -41,6 +41,17 @@ async function getReclamosPaginados(estado, tipo, fecha, limit, offset) {
   if (fecha) {
     query += ' AND DATE(fecha) = ?';
     params.push(fecha);
+  }
+
+  if (busqueda && typeof busqueda === 'string') {
+    query += ` AND (
+      nombre LIKE ? OR
+      apellido LIKE ? OR
+      email LIKE ? OR
+      descripcion LIKE ?
+    )`;
+    const like = `%${busqueda}%`;
+    params.push(like, like, like, like);
   }
 
   query += ' ORDER BY fecha DESC LIMIT ? OFFSET ?';
@@ -110,7 +121,7 @@ async function contarPorEstado() {
 
 }
 
-async function contarReclamos(estado, tipo, fecha) {
+async function contarReclamos(estado, tipo, fecha, busqueda) {
   let query = 'SELECT COUNT(*) AS total FROM reclamos WHERE 1=1';
   let params = [];
 
@@ -127,6 +138,17 @@ async function contarReclamos(estado, tipo, fecha) {
   if (fecha) {
     query += ' AND DATE(fecha) = ?';
     params.push(fecha);
+  }
+
+  if (busqueda && typeof busqueda === 'string') {
+    query += ` AND (
+      nombre LIKE ? OR
+      apellido LIKE ? OR
+      email LIKE ? OR
+      descripcion LIKE ?
+    )`;
+    const like = `%${busqueda}%`;
+    params.push(like, like, like, like);
   }
 
   const [result] = await pool.query(query, params);

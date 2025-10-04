@@ -11,43 +11,52 @@
   <h3>Listado de Reclamos</h3>
 
   <form method="GET" action="/admin/verReclamos" class="form-filtro">
-    <div class="filtro-item">
+    <div class="filtro-grupo">
       <label for="estado">Estado:</label>
-      <select name="estado" id="estado" class="filtro-select" onchange="this.form.submit()">
+      <select name="estado" id="estado" class="filtro-control" onchange="this.form.submit()">
         <option value="" {{#unless estadoSeleccionado}}selected{{/unless}}>Todos</option>
-        <option value="Nuevo" {{#ifCond estadoSeleccionado '==' 'Nuevo' }}selected{{/ifCond}}>Nuevo</option>
-        <option value="Cargado" {{#ifCond estadoSeleccionado '==' 'Cargado' }}selected{{/ifCond}}>Cargado</option>
-        <option value="En proceso" {{#ifCond estadoSeleccionado '==' 'En proceso' }}selected{{/ifCond}}>En proceso
-        </option>
-        <option value="En revision" {{#ifCond estadoSeleccionado '==' 'En revision' }}selected{{/ifCond}}>En revisión
-        </option>
-        <option value="Resuelto" {{#ifCond estadoSeleccionado '==' 'Resuelto' }}selected{{/ifCond}}>Resuelto</option>
-        <option value="Cerrado" {{#ifCond estadoSeleccionado '==' 'Cerrado' }}selected{{/ifCond}}>Cerrado</option>
+        <option value="Nuevo" {{#ifCond estadoSeleccionado '==' 'Nuevo'}}selected{{/ifCond}}>Nuevo</option>
+        <option value="Cargado" {{#ifCond estadoSeleccionado '==' 'Cargado'}}selected{{/ifCond}}>Cargado</option>
+        <option value="En proceso" {{#ifCond estadoSeleccionado '==' 'En proceso'}}selected{{/ifCond}}>En proceso</option>
+        <option value="En revision" {{#ifCond estadoSeleccionado '==' 'En revision'}}selected{{/ifCond}}>En revisión</option>
+        <option value="Resuelto" {{#ifCond estadoSeleccionado '==' 'Resuelto'}}selected{{/ifCond}}>Resuelto</option>
+        <option value="Cerrado" {{#ifCond estadoSeleccionado '==' 'Cerrado'}}selected{{/ifCond}}>Cerrado</option>
       </select>
     </div>
 
-    <div class="filtro-item">
+    <div class="filtro-grupo">
       <label for="tipo">Tipo:</label>
-      <select name="tipo" id="tipo" class="filtro-select" onchange="this.form.submit()">
+      <select name="tipo" id="tipo" class="filtro-control" onchange="this.form.submit()">
         <option value="" {{#unless tipoSeleccionado}}selected{{/unless}}>Todos</option>
-        <option value="basural" {{#ifCond tipoSeleccionado '==' 'basural' }}selected{{/ifCond}}>Basural</option>
-        <option value="recoleccion" {{#ifCond tipoSeleccionado '==' 'recoleccion' }}selected{{/ifCond}}>Recolección
-        </option>
-        <option value="ramas" {{#ifCond tipoSeleccionado '==' 'ramas' }}selected{{/ifCond}}>Ramas</option>
-        <option value="otros" {{#ifCond tipoSeleccionado '==' 'otros' }}selected{{/ifCond}}>Otros</option>
+        <option value="basural" {{#ifCond tipoSeleccionado '==' 'basural'}}selected{{/ifCond}}>Basural</option>
+        <option value="recoleccion" {{#ifCond tipoSeleccionado '==' 'recoleccion'}}selected{{/ifCond}}>Recolección</option>
+        <option value="ramas" {{#ifCond tipoSeleccionado '==' 'ramas'}}selected{{/ifCond}}>Ramas</option>
+        <option value="otros" {{#ifCond tipoSeleccionado '==' 'otros'}}selected{{/ifCond}}>Otros</option>
       </select>
     </div>
 
-    <div class="filtro-item">
+    <div class="filtro-grupo">
       <label for="fecha">Fecha:</label>
-      <input type="date" name="fecha" id="fecha" class="filtro-select" value="{{fechaSeleccionada}}"
-        onchange="this.form.submit()" />
+      <input type="date" name="fecha" id="fecha" class="filtro-control" value="{{fechaSeleccionada}}" onchange="this.form.submit()" />
     </div>
-  </form>
+<div class="filtro-grupo">
+  <label for="busqueda">Buscar:</label>
+  <input type="text" name="busqueda" id="busqueda" class="filtro-control" placeholder="Nombre, email, descripción..."
+    value="{{busquedaTexto}}" />
+</div>
+
+<div class="filtro-grupo botones">
+  <label>&nbsp;</label>
+  <div class="botones-contenedor">
+    <button type="submit" class="btn-filtro">Buscar</button>
+    <a href="/admin/verReclamos" class="btn-filtro limpiar">Limpiar</a>
+  </div>
+</div>
+</form>
 
 
-  <table class="table table-hover">
-    <thead>
+<table class="table table-hover">
+  <thead>
       <tr>
         <th>#ID Reclamo</th>
         <th>Fecha</th>

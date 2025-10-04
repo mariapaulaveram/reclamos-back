@@ -18,6 +18,7 @@ router.get('/', secured, async function(req, res, next) {
     const estadoFiltro = req.query.estado || null;
     const tipoFiltro = req.query.tipo || null;
     const fechaFiltro = req.query.fecha || null;
+    const busquedaTexto = req.query.busqueda || null;
     const page = parseInt(req.query.page) || 1;
     const limit = 3;
     const offset = (page - 1) * limit;
@@ -25,10 +26,11 @@ router.get('/', secured, async function(req, res, next) {
     console.log('Estado recibido:', estadoFiltro);
     console.log('Tipo recibido:', tipoFiltro);
     console.log('Fecha recibida:', fechaFiltro);
+    console.log('Texto buscado:', busquedaTexto);
     console.log('Página actual:', page);
 
-    const total = await reclamosModel.contarReclamos(estadoFiltro, tipoFiltro, fechaFiltro);
-    const reclamos = await reclamosModel.getReclamosPaginados(estadoFiltro, tipoFiltro, fechaFiltro, limit, offset);
+    const total = await reclamosModel.contarReclamos(estadoFiltro, tipoFiltro, fechaFiltro, busquedaTexto);
+    const reclamos = await reclamosModel.getReclamosPaginados(estadoFiltro, tipoFiltro, fechaFiltro, busquedaTexto, limit, offset);
     const totalPages = Math.ceil(total / limit);
 
     const reclamosFormateados = reclamos.map(reclamo => ({
@@ -50,6 +52,7 @@ router.get('/', secured, async function(req, res, next) {
       estadoSeleccionado: estadoFiltro,
       tipoSeleccionado: tipoFiltro,
       fechaSeleccionada: fechaFiltro,
+      busquedaTexto,
       currentPage: page,
       totalPages
     });
