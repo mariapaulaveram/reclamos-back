@@ -1,11 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const app = require('./app');
 
-router.get('/', function(req, res, next) {
-  res.redirect('/admin/login');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
 });
 
-module.exports = router;
+
+
 
 
 
