@@ -33,7 +33,7 @@ function getVecinoPorId(id) {
   });
 }
 
-function registrarVecino(nombre, apellido, email, password) {
+/*function registrarVecino(nombre, apellido, email, password) {
   return new Promise((resolve, reject) => {
     const checkQuery = 'SELECT id FROM vecinos WHERE email = ?';
     pool.query(checkQuery, [email], (err, result) => {
@@ -55,7 +55,36 @@ function registrarVecino(nombre, apellido, email, password) {
       });
     });
   });
+}*/
+
+
+function registrarVecino(nombre, apellido, email, password) {
+  return new Promise((resolve, reject) => {
+    const checkQuery = 'SELECT id FROM vecinos WHERE email = ?';
+    pool.query(checkQuery, [email], (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+
+      if (result.length > 0) {
+        return reject(new Error('El email ya está registrado'));
+      }
+
+      // Encriptar la contraseña con MD5
+      const passwordEncriptada = md5(password);
+
+      const insertQuery = 'INSERT INTO vecinos (nombre, apellido, email, password) VALUES (?, ?, ?, ?)';
+      pool.query(insertQuery, [nombre, apellido, email, passwordEncriptada], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ id: result.insertId, nombre, apellido, email });
+        }
+      });
+    });
+  });
 }
+
 
 function getReclamosPorVecinoId(vecino_id) {
   return new Promise((resolve, reject) => {
